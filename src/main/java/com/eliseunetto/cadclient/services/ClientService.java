@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eliseunetto.cadclient.entities.Client;
 import com.eliseunetto.cadclient.repositories.ClientRepository;
+import com.eliseunetto.cadclient.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClientService {
@@ -25,6 +26,6 @@ public class ClientService {
 	@Transactional(readOnly = true)
 	public Client findById(Long id) {
 		Optional<Client> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ResourceNotFoundException("Entiti not found"));
 	}
 }
